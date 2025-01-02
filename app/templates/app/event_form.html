@@ -1,0 +1,13 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+    <h1>{% if form.instance.pk %}Edit Event{% else %}New Event{% endif %}</h1>
+    <form action="{% if form.instance.pk %}{% url 'event_update' form.instance.pk %}{% else %}{% url 'event_create' %}{% endif %}" method="POST">
+        {% csrf_token %}
+        
+        {{ form.as_p }}
+        
+        <input type="submit" value="{% if form.instance.pk %}Update{% else %}Save{% endif %}">
+    </form>
+    <a href="{% url 'event_list' %}" class="btn btn-secondary">Back to Event List</a>
+{% endblock content %}

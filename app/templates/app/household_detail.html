@@ -1,0 +1,21 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+    <h1>{{ household.household_name }}</h1>
+    <p>Head of Household: {{ household.head.first_name }} {{ household.head.last_name }}</p>
+    <p>Address: {{ household.address }}</p>
+
+    <h2>Members:</h2>
+    {% if members %}
+        <ul>
+            {% for resident in members %}
+                <li>{{ resident.first_name }} {{ resident.last_name }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No members in this household.</p>
+    {% endif %}
+
+    <a href="{% url 'household_update' household.pk %}">Edit Household</a>
+    <a href="{% url 'household_list' %}" class="btn btn-secondary">Back to Household List</a>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+    <h1>Update Household: {{ object.household_name }}</h1>
+
+    <!-- Display form errors if there are any -->
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <!-- Household update form -->
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Renders the form fields -->
+        <button type="submit">Save</button>
+    </form>
+    <a href="{% url 'household_list' %}" class="btn btn-secondary">Back to Household List</a>
+
+{% endblock %}

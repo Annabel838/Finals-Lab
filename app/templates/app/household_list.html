@@ -1,0 +1,18 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+    <h1>Household List</h1>
+    <a href="{% url 'household_create' %}">+ Create Household</a>
+    <ul>
+        {% for household in households %}
+        <li>
+            <h2>
+                <a href="{% url 'household_detail' household.pk %}">{{ household.household_name }}</a>
+            </h2>
+        </li>
+        {% empty %}
+        <li>No households available.</li>
+        {% endfor %}
+
+    </ul>
+{% endblock %}

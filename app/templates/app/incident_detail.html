@@ -1,0 +1,27 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+  <h2>Incident Report Details</h2>
+  <p><strong>Title:</strong> {{ incident.title }}</p>
+  <p><strong>Report Date:</strong> {{ incident.report_date }}</p>
+  <p><strong>Description:</strong> {{ incident.description }}</p>
+  <p><strong>Location:</strong> {{ incident.location }}</p>
+  <p><strong>Reported by:</strong> {{ incident.reported_by }}</p>
+  <p><strong>Involved Residents:</strong></p>
+  <ul>
+    {% for resident in incident.involved_residents.all %}
+      <li>{{ resident.first_name }} {{ resident.last_name }}</li>
+    {% endfor %}
+  </ul>
+
+  <h2>Associated Events:</h2>
+{% if incident.events.all %}
+    <ul>
+        {% for event in incident.events.all %}
+            <li>{{ event.event_name }} - {{ event.date }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No events associated with this incident.</p>
+{% endif %}
+{% endblock %}

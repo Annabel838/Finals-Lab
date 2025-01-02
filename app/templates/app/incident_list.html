@@ -1,0 +1,17 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+  <h2>Incident Report</h2>
+  <a href="{% url 'incident_create' %}" class="btn btn-primary">Create Incident Report</a>
+  
+  <!-- List of incident reports -->
+  <ul>
+    {% for incident in incidents %}
+      <li>
+        <a href="{% url 'incident_detail' pk=incident.pk %}">{{ incident.title }}</a>
+      </li>
+    {% empty %}
+      <p>No incident reports available.</p>
+    {% endfor %}
+  </ul>
+{% endblock content %}

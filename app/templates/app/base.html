@@ -3,15 +3,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="{% static 'css/base.css' %}"> <!-- Correctly closed -->
+    <title>Your Website Title</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
 </head>
 <body>
-{% include 'app/navbar.html' %}
+    {% include 'app/navbar.html' %}
 
-{% block content %}
-<!-- pages -->
-{% endblock content %}
-<script src="{% static 'js/base.js' %}"></script>
+    {% block content %}
+    {% endblock content %}
+
+    <script src="{% static 'js/base.js' %}"></script>
 </body>
 </html>

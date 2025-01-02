@@ -1,0 +1,12 @@
+{% extends 'app/base.html' %}
+{% block content %}
+<h1>Officials</h1>
+<a href="{% url 'official_create' %}">+ Add New Official</a>
+<ul>
+    {% for official in officials %}
+        <li>
+            <a href="{% url 'official_detail' official.pk %}">{{ official.position }} - {{ official.first_name }} {{ official.last_name }}</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock content %}

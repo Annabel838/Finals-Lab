@@ -1,0 +1,13 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+  <h2>Create Official</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Official</button>
+  </form>
+
+  <a href="{% url 'official_list' %}">Back to list</a>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'app/base.html' %}
+{% block content %}
+   <h1>New Resident</h1>
+   <form action="{% url 'res_create' %}" method="POST">
+       {% csrf_token %}
+       {{ form.as_p }}
+       <input type="submit" value="Save">
+   </form>
+
+   {% if resident_created %}
+       <br>
+       <p>Resident created successfully!</p>
+       <a href="{% url 'res_list' %}" class="btn btn-secondary">Back to Resident Table</a>
+   {% endif %}
+{% endblock %}

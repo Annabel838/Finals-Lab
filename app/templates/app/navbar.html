@@ -1,4 +1,19 @@
-<header>
-    <a href="{% url 'home' %}">Home</a>
-    <a href="{% url 'about' %}">About</a>
+<header class="header 
+    {% if request.path == '/' %}home-header
+    {% elif request.path == '/about/' %}about-header
+    {% elif request.path == '/res/' %}res-header
+    {% elif request.path == '/officials/' %}official-header
+    {% elif request.path == '/events/' %}event-header
+    {% elif request.path == '/incident/' %}incident-header
+    {% elif request.path == '/household/' %}household-header
+    {% endif %}">
+    <nav>
+        <a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a>
+        <a href="/about/" class="{% if request.path == '/about/' %}active{% endif %}">About</a>
+        <a href="/res/" class="{% if request.path == '/res/' %}active{% endif %}">Resident</a>
+        <a href="/officials/" class="{% if request.path == '/officials/' %}active{% endif %}">Official</a>
+        <a href="/events/" class="{% if request.path == '/events/' %}active{% endif %}">Events</a>
+        <a href="/incident/" class="{% if request.path == '/incident/' %}active{% endif %}">Incident Reports</a>
+        <a href="/households/" class="{% if request.path == '/household/' %}active{% endif %}">Households</a>
+    </nav>
 </header>

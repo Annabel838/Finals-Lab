@@ -1,0 +1,10 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+   <h1>Delete household</h1>
+   <form action="{% url 'household_delete' household.pk %}" method="POST">
+       {% csrf_token %}
+       <p>Are you sure you want to delete {{ household.household_name }}?</p>
+       <input type="submit" value="Confirm">
+   </form>
+{% endblock content %}

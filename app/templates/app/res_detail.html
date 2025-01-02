@@ -1,0 +1,35 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <h1>{{ resident.first_name }} {{ resident.last_name }}</h1>
+    <p>Birthdate: {{ resident.birthdate }}</p>
+    <p>Address: {{ resident.address }}</p>
+
+    {% if resident.household %}
+        <p>Household: {{ resident.household.household_name }}</p>
+        <p>Head of Household: {{ resident.household.head.first_name }} {{ resident.household.head.last_name }}</p>
+    {% else %}
+        <p>This resident does not belong to any household.</p>
+    {% endif %}
+
+    <h2>Events:</h2>
+    {% if resident.events.all %}
+        <ul>
+            {% for event in resident.events.all %}
+                <li>{{ event.event_name }} on {{ event.date }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>This resident is not attending any events.</p>
+    {% endif %}
+
+    <a href="{% url 'res_update' resident.pk %}">+ Edit</a>
+    <a href="{% url 'res_delete' resident.pk %}">- Delete Content</a>
+
+    <!-- Back to Resident Table Button -->
+    <br><br>
+    <a href="{% url 'res_list' %}" class="btn btn-secondary">Back to Resident Table</a>
+
+{% endblock %}
