@@ -1,10 +1,117 @@
 {% extends 'app/base.html' %}
 {% load static %}
+
 {% block content %}
-   <h1>Edit Official</h1>
-   <form action="{% url 'official_update' official.pk %}" method="POST">
-       {% csrf_token %}
-       {{ form.as_p }}
-       <input type="submit" value="Update">
-   </form>
-{% endblock content %}
+<div class="update-official-container">
+    <h1>Edit Official</h1>
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Resident Dropdown -->
+        <label for="resident">Resident:</label>
+        <select id="resident" name="resident" required>
+            <option value="" disabled>Select a resident</option>
+            {% for resident in residents %}
+                <option value="{{ resident.pk }}" {% if official.resident and official.resident.pk == resident.pk %}selected{% endif %}>
+                    {{ resident.first_name }} {{ resident.last_name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <!-- Position -->
+        <label for="position">Position:</label>
+        <input type="text" id="position" name="position" value="{{ form.instance.position }}" required>
+
+        <!-- Contact Number -->
+        <label for="contact_number">Contact Number:</label>
+        <input type="text" id="contact_number" name="contact_number" value="{{ form.instance.contact_number }}" required>
+
+        <!-- Term Start -->
+        <label for="term_start">Term Start:</label>
+        <input type="date" id="term_start" name="term_start" value="{{ form.instance.term_start|date:'Y-m-d' }}" required>
+
+        <!-- Term End -->
+        <label for="term_end">Term End:</label>
+        <input type="date" id="term_end" name="term_end" value="{{ form.instance.term_end|date:'Y-m-d' }}" required>
+
+        <!-- Action Buttons -->
+        <div class="button-group">
+            <a href="{% url 'official_detail' official.pk %}" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary">Update Official</button>
+        </div>
+    </form>
+</div>
+
+<style>
+    /* Style the form layout */
+    .update-official-container {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 20px;
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        font-family: 'Poppins', sans-serif;
+    }
+
+    h1 {
+        text-align: center;
+        color: #1d3557;
+        margin-bottom: 20px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    label {
+        font-weight: 500;
+        color: #495057;
+    }
+
+    input, select {
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+
+    input:focus, select:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+    }
+
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .btn {
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        color: #fff;
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+</style>
+{% endblock %}

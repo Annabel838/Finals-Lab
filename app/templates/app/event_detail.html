@@ -1,10 +1,117 @@
 {% extends 'app/base.html' %}
 {% load static %}
+
 {% block content %}
+<style>
+    /* Body Styling */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Event Container */
+    .event-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    /* Event Header */
+    h1 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    /* Event Details */
+    .event-detail p {
+        margin: 10px 0;
+        font-size: 1.1rem;
+        color: #555;
+        text-align: center;
+    }
+
+    .event-detail strong {
+        color: #333;
+    }
+
+    /* Residents List */
+    h2 {
+        margin-top: 20px;
+        color: #444;
+        font-size: 1.3rem;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    ul li {
+        background: #f0f0f0;
+        margin: 5px auto;
+        padding: 10px;
+        border-radius: 8px;
+        color: #333;
+        display: inline-block;
+        width: 90%;
+    }
+
+    /* Buttons */
+    .btn {
+        display: inline-block;
+        margin: 10px 5px;
+        padding: 10px 15px;
+        font-size: 1rem;
+        font-weight: bold;
+        text-decoration: none;
+        border-radius: 8px;
+        color: #fff;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background: #007bff;
+    }
+
+    .btn-primary:hover {
+        background: #0056b3;
+    }
+
+    .btn-danger {
+        background: #dc3545;
+    }
+
+    .btn-danger:hover {
+        background: #b52a3b;
+    }
+
+    .btn-secondary {
+        background: #6c757d;
+    }
+
+    .btn-secondary:hover {
+        background: #495057;
+    }
+</style>
+
+<div class="event-container">
     <h1>{{ event.event_name }}</h1>
-    <p>Description: {{ event.description }}</p>
-    <p>Date: {{ event.date }}</p>
-    <p>Location: {{ event.location }}</p>
+    <div class="event-detail">
+        <p><strong>Description:</strong> {{ event.description }}</p>
+        <p><strong>Date:</strong> {{ event.date }}</p>
+        <p><strong>Location:</strong> {{ event.location }}</p>
+    </div>
 
     <h2>Attending Residents:</h2>
     {% if event.residents.all %}
@@ -17,9 +124,8 @@
         <p>No residents are attending this event.</p>
     {% endif %}
 
-    <a href="{% url 'event_update' event.pk %}">+ Edit</a>
-    <a href="{% url 'event_delete' event.pk %}">- Delete Content</a>
-
-    <!-- Button to redirect to the event list -->
-    <a href="{% url 'event_list' %}" class="btn btn-primary">Back to Event List</a>
+    <a href="{% url 'event_form' event.pk %}" class="btn btn-primary">Edit</a>
+    <a href="{% url 'event_delete' event.pk %}" class="btn btn-danger">Delete</a>
+    <a href="{% url 'event_list' %}" class="btn btn-secondary">Back</a>
+</div>
 {% endblock content %}

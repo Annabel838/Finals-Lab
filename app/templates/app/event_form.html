@@ -1,13 +1,132 @@
 {% extends 'app/base.html' %}
 
 {% block content %}
-    <h1>{% if form.instance.pk %}Edit Event{% else %}New Event{% endif %}</h1>
-    <form action="{% if form.instance.pk %}{% url 'event_update' form.instance.pk %}{% else %}{% url 'event_create' %}{% endif %}" method="POST">
-        {% csrf_token %}
-        
-        {{ form.as_p }}
-        
-        <input type="submit" value="{% if form.instance.pk %}Update{% else %}Save{% endif %}">
-    </form>
-    <a href="{% url 'event_list' %}" class="btn btn-secondary">Back to Event List</a>
-{% endblock content %}
+<div class="main-content">
+    <div class="form-container">
+        <h1>{% if form.instance.pk %}Edit Event{% else %}Create Event{% endif %}</h1>
+        <form method="post" action="{% if form.instance.pk %}{% url 'event_form' form.instance.pk %}{% else %}{% url 'event_form' %}{% endif %}">
+            {% csrf_token %}
+
+            <label for="event_name">Event Name:</label>
+            <input type="text" id="event_name" name="event_name" placeholder="Enter event name" value="{{ form.event_name.value }}" required>
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" placeholder="Enter event description" required>{{ form.description.value }}</textarea>
+
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" value="{{ form.date.value }}" required>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" placeholder="Enter event location" value="{{ form.location.value }}" required>
+
+            <div class="button-container">
+                <button type="submit" class="button button-primary">
+                    {% if form.instance.pk %}Update{% else %}Save{% endif %}
+                </button>
+                <a href="{% url 'event_list' %}" class="button button-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    /* General Body Styling */
+    body {
+        margin: 0;
+        background: linear-gradient(135deg, #f9f9f9, #e0eafc);
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+        height: 100%;
+    }
+
+    /* Main Content Styling */
+    .main-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    /* Form Container */
+    .form-container {
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 600px;
+        text-align: center;
+    }
+
+    /* Form Header */
+    .form-container h1 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #1d3557;
+        margin-bottom: 20px;
+    }
+
+    /* Form Inputs */
+    .form-container label {
+        display: block;
+        font-size: 1rem;
+        font-weight: 500;
+        margin: 15px 0 5px;
+        text-align: left;
+    }
+
+    .form-container input,
+    .form-container textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 2px solid #a8dadc;
+        border-radius: 8px;
+        font-size: 1rem;
+        color: #495057;
+        box-sizing: border-box;
+    }
+
+    .form-container input:focus,
+    .form-container textarea:focus {
+        border-color: #457b9d;
+        outline: none;
+    }
+
+    /* Buttons */
+    .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        text-align: center;
+        color: #ffffff;
+    }
+
+    .button-primary {
+        background-color: #1d3557;
+    }
+
+    .button-primary:hover {
+        background-color: #457b9d;
+    }
+
+    .button-secondary {
+        background-color: #e63946;
+    }
+
+    .button-secondary:hover {
+        background-color: #c62828;
+    }
+</style>
+{% endblock %}

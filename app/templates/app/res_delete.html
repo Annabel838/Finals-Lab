@@ -1,10 +1,92 @@
 {% extends 'app/base.html' %}
 {% load static %}
+
 {% block content %}
-   <h1>Delete Resident</h1>
-   <form action="{% url 'res_delete' resident.pk %}" method="POST">
-       {% csrf_token %}
-       <p>Are you sure you want to delete {{ resident.last_name }}?</p>
-       <input type="submit" value="Confirm">
-   </form>
-{% endblock content %}
+<div class="delete-resident-container">
+    <h1>Delete Resident</h1>
+    <p class="warning-text">Are you sure you want to delete <strong>{{ resident.last_name }}</strong>? This action cannot be undone.</p>
+    
+    <form action="{% url 'res_delete' resident.pk %}" method="POST" class="delete-form">
+        {% csrf_token %}
+        <div class="button-container">
+            <button type="submit" class="button button-danger">Confirm</button>
+            <a href="{% url 'res_list' %}" class="button button-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<style>
+    /* Page Container */
+    .delete-resident-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+        text-align: center;
+    }
+
+    /* Header */
+    .delete-resident-container h1 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #e63946;
+        margin-bottom: 20px;
+    }
+
+    /* Warning Text */
+    .warning-text {
+        font-size: 1.2rem;
+        color: #495057;
+        margin-bottom: 30px;
+        background: #ffe5e5;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #e63946;
+    }
+
+    /* Form Buttons */
+    .delete-form {
+        margin-top: 20px;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        text-align: center;
+        text-decoration: none;
+        color: #ffffff;
+    }
+
+    .button-danger {
+        background-color: #e63946;
+    }
+
+    .button-danger:hover {
+        background-color: #c62828;
+    }
+
+    .button-secondary {
+        background-color: #457b9d;
+    }
+
+    .button-secondary:hover {
+        background-color: #1d3557;
+    }
+</style>
+{% endblock %}

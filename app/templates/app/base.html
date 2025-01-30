@@ -3,14 +3,82 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Your Website Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pilar Baranggay Website</title>
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .user-info p {
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .logout-form {
+            margin: 0;
+        }
+
+        .logout-btn {
+            background: white;
+            color: #007bff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            background: #0056b3;
+            color: white;
+        }
+    </style>
 </head>
 <body>
+
     {% include 'app/navbar.html' %}
 
-    {% block content %}
-    {% endblock content %}
+    <div class="container">
+        {% if user.is_authenticated %}
+            <div class="user-info">
+                <p>Hi, {{ user.username }}</p>
+                <form method="post" action="{% url 'logout' %}" class="logout-form">
+                    {% csrf_token %}
+                </form>
+            </div>
+        {% else %}
+            <p style="text-align: center; color: red;">You are not Logged In</p>
+        {% endif %}
+
+        {% block content %}
+        {% endblock content %}
+    </div>
 
     <script src="{% static 'js/base.js' %}"></script>
 </body>

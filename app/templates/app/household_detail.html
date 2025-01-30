@@ -1,21 +1,116 @@
 {% extends 'app/base.html' %}
 
 {% block content %}
-    <h1>{{ household.household_name }}</h1>
-    <p>Head of Household: {{ household.head.first_name }} {{ household.head.last_name }}</p>
-    <p>Address: {{ household.address }}</p>
+<div class="household-detail-container">
+    <div class="household-header">
+        <h1>{{ household.household_name }}</h1>
+        <p><strong>Head of Household:</strong> {{ household.head.first_name }} {{ household.head.last_name }}</p>
+        <p><strong>Address:</strong> {{ household.address }}</p>
+    </div>
 
-    <h2>Members:</h2>
-    {% if members %}
-        <ul>
-            {% for resident in members %}
-                <li>{{ resident.first_name }} {{ resident.last_name }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No members in this household.</p>
-    {% endif %}
+    <div class="household-members">
+        <h2>Members:</h2>
+        {% if household.members.all %}
+            <ul>
+                {% for resident in household.members.all %}
+                    <li>{{ resident.first_name }} {{ resident.last_name }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No members in this household.</p>
+        {% endif %}
+    </div>
 
-    <a href="{% url 'household_update' household.pk %}">Edit Household</a>
-    <a href="{% url 'household_list' %}" class="btn btn-secondary">Back to Household List</a>
+    <div class="household-actions">
+        <a href="{% url 'household_update' household.pk %}" class="button button-primary">Edit</a>
+        <a href="{% url 'household_list' %}" class="button button-secondary">Back</a>
+    </div>
+</div>
+
+<style>
+    /* Page Container */
+    .household-detail-container {
+        max-width: 700px;
+        margin: 50px auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+    }
+
+    /* Header Section */
+    .household-header h1 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #1d3557;
+        margin-bottom: 15px;
+    }
+
+    .household-header p {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 10px;
+    }
+
+    /* Members Section */
+    .household-members h2 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #1d3557;
+        margin-top: 30px;
+        margin-bottom: 15px;
+    }
+
+    .household-members ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .household-members li {
+        font-size: 1rem;
+        background: #f1faee;
+        margin: 5px 0;
+        padding: 10px;
+        border-radius: 8px;
+        color: #333;
+    }
+
+    /* Actions Section */
+    .household-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+    }
+
+    .button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: #ffffff;
+        transition: all 0.3s ease;
+    }
+
+    .button-primary {
+        background-color: #1d3557;
+    }
+
+    .button-primary:hover {
+        background-color: #457b9d;
+    }
+
+    .button-secondary {
+        background-color: #e63946;
+    }
+
+    .button-secondary:hover {
+        background-color: #c62828;
+    }
+</style>
 {% endblock %}

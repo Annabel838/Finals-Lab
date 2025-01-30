@@ -1,0 +1,84 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    .signup-container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        background: white;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .signup-container h1 {
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    form p {
+        text-align: left;
+        margin-bottom: 10px;
+    }
+
+    input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .signup-btn {
+        background: #007bff;
+        color: white;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+
+    .signup-btn:hover {
+        background: #0056b3;
+    }
+
+    .login-link {
+        margin-top: 10px;
+        font-size: 14px;
+    }
+
+    .login-link a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .login-link a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="signup-container">
+    <h1>Sign Up</h1>  
+
+    <form method="post">    
+        {% csrf_token %}
+        
+        {{ form.as_p }}
+
+        <button type="submit" class="signup-btn">Sign Up</button>  
+    </form>
+
+    <p class="login-link">Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+</div>
+
+{% endblock content %}

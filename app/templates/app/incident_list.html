@@ -1,17 +1,123 @@
 {% extends 'app/base.html' %}
 
 {% block content %}
-  <h2>Incident Report</h2>
-  <a href="{% url 'incident_create' %}" class="btn btn-primary">Create Incident Report</a>
-  
-  <!-- List of incident reports -->
-  <ul>
-    {% for incident in incidents %}
-      <li>
-        <a href="{% url 'incident_detail' pk=incident.pk %}">{{ incident.title }}</a>
-      </li>
-    {% empty %}
-      <p>No incident reports available.</p>
-    {% endfor %}
-  </ul>
-{% endblock content %}
+<div class="container mt-5">
+    <!-- Header Section -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-info">Incident Reports</h2>
+        <a href="{% url 'incident_create' %}" class="btn btn-success btn-lg">
+            + Create Incident Report
+        </a>
+    </div>
+
+    <!-- Incident List -->
+    {% if incidents %}
+    <div class="list-group shadow-lg">
+        {% for incident in incidents %}
+        <a href="{% url 'incident_detail' pk=incident.pk %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="mb-1 text-dark">{{ incident.title }}</h5>
+                <small class="text-muted">Reported on {{ incident.date_created|date:"M d, Y" }}</small>
+            </div>
+            <button class="btn btn-primary btn-sm">View</button>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-warning text-center mt-4">
+        <strong>No incident reports available.</strong>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    /* General Styles */
+    body {
+        background: linear-gradient(135deg, #e8f5e9, #e3f2fd);
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: auto;
+    }
+
+    /* Header Styling */
+    h2 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #1d3557;
+    }
+
+    /* Button Styling */
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+        transform: scale(1.05);
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        font-size: 0.9rem;
+        padding: 5px 15px;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+    }
+
+    /* Incident List */
+    .list-group {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .list-group-item {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .list-group-item:hover {
+        transform: scale(1.03);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h5 {
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin: 0;
+    }
+
+    .text-muted {
+        font-size: 0.9rem;
+    }
+
+    /* Alert Box */
+    .alert-warning {
+        background-color: #fff4e5;
+        color: #8a6d3b;
+        padding: 20px;
+        font-size: 1rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+</style>
+{% endblock %}

@@ -1,5 +1,83 @@
 {% extends 'app/base.html' %}
 
 {% block content %}
-<h1>This is the About Page</h1>
+<div class="about-page">
+    <div class="about-content">
+        <h1 class="about-title">About Us</h1>
+        <p class="about-description">
+            Welcome to Pilar Baranggay Websites!
+At Pilar Baranggay Websites, 
+we are committed to building a safe, progressive,
+ and harmonious community for all our residents. 
+ Our barangay serves as the foundation of local governance, 
+ working closely with our people to ensure a 
+ thriving and inclusive neighborhood.
+        </p>
+      
+        <p class="about-mission">
+            Our mission is to bring love, unity, and joy to every aspect of our community. Join us on this journey and be part of something meaningful!
+        </p>
+    </div>
+</div>
+
+<style>
+    /* About Page Styles */
+    .about-page {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f0f8ff, #d8eefe);
+        padding: 20px;
+    }
+
+    .about-content {
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        max-width: 700px;
+        text-align: center;
+    }
+
+    .about-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #1d3557;
+        margin-bottom: 20px;
+    }
+
+    .about-description,
+    .about-mission {
+        font-size: 1.2rem;
+        color: #555;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .about-image {
+        width: 100%;
+        max-width: 500px;
+        border-radius: 10px;
+        margin: 20px auto;
+        display: block;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .about-content {
+            padding: 20px;
+        }
+
+        .about-title {
+            font-size: 2rem;
+        }
+
+        .about-description,
+        .about-mission {
+            font-size: 1rem;
+        }
+    }
+</style>
 {% endblock content %}

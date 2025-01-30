@@ -1,13 +1,129 @@
 {% extends 'app/base.html' %}
 
 {% block content %}
-  <h2>Create Official</h2>
+<div class="main-content">
+    <div class="form-container">
+        <h1>Create Official</h1>
+        <form method="post" class="official-form">
+            {% csrf_token %}
 
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save Official</button>
-  </form>
+            <!-- Dynamically rendered form fields -->
+            {{ form.as_p }}
 
-  <a href="{% url 'official_list' %}">Back to list</a>
+            <div class="button-group">
+                <a href="{% url 'official_list' %}" class="button button-secondary">Cancel</a>
+                <button type="submit" class="button button-primary">Save Official</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+/* General Styling */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
+    color: #333;
+    height: 100%;
+}
+
+/* Main Content Styling */
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Form Container */
+.form-container {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1d3557;
+    margin-bottom: 20px;
+}
+
+/* Form Styling */
+.official-form {
+    text-align: left;
+    font-size: 1rem;
+}
+
+.official-form label {
+    display: block;
+    margin: 15px 0 5px;
+    font-weight: 500;
+    color: #495057;
+}
+
+.official-form input,
+.official-form select,
+.official-form textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.official-form input:focus,
+.official-form select:focus,
+.official-form textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.button {
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.button-primary {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+}
+
+.button-primary:hover {
+    background-color: #218838;
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.4);
+}
+
+.button-secondary {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+}
+
+.button-secondary:hover {
+    background-color: #5a6268;
+    box-shadow: 0 4px 8px rgba(108, 117, 125, 0.4);
+}
+</style>
 {% endblock %}

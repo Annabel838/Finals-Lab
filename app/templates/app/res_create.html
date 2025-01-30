@@ -1,15 +1,144 @@
 {% extends 'app/base.html' %}
-{% block content %}
-   <h1>New Resident</h1>
-   <form action="{% url 'res_create' %}" method="POST">
-       {% csrf_token %}
-       {{ form.as_p }}
-       <input type="submit" value="Save">
-   </form>
 
-   {% if resident_created %}
-       <br>
-       <p>Resident created successfully!</p>
-       <a href="{% url 'res_list' %}" class="btn btn-secondary">Back to Resident Table</a>
-   {% endif %}
+{% block content %}
+<div class="main-content">
+    <div class="form-container">
+        <h1>Create Resident</h1>
+        <form method="post" class="resident-form">
+            {% csrf_token %}
+            
+            <!-- Render Django Form Fields -->
+            <label for="first_name">First Name:</label>
+            {{ form.first_name }}
+
+            <label for="last_name">Last Name:</label>
+            {{ form.last_name }}
+
+            <label for="gender">Gender:</label>
+            {{ form.gender }}
+
+            <label for="birthdate">Birthdate:</label>
+            {{ form.birthdate }}
+
+            <label for="address">Address:</label>
+            {{ form.address }}
+
+            <label for="household">Household:</label>
+            {{ form.household }}
+
+            <!-- Buttons -->
+            <div class="button-group">
+                <a href="{% url 'res_list' %}" class="button button-secondary">Cancel</a>
+                <button type="submit" class="button button-primary">Save Resident</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+/* General Styling */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #e0f7fa, #e1bee7);
+    color: #333;
+    height: 100%;
+}
+
+/* Main Content Styling */
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Form Container */
+.form-container {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1d3557;
+    margin-bottom: 20px;
+}
+
+/* Form Styling */
+.resident-form {
+    text-align: left;
+    font-size: 1rem;
+}
+
+.resident-form label {
+    display: block;
+    margin: 15px 0 5px;
+    font-weight: 500;
+    color: #495057;
+}
+
+.resident-form input,
+.resident-form select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.resident-form input:focus,
+.resident-form select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.button {
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.button-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+}
+
+.button-primary:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
+}
+
+.button-secondary {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+}
+
+.button-secondary:hover {
+    background-color: #5a6268;
+    box-shadow: 0 4px 8px rgba(108, 117, 125, 0.4);
+}
+</style>
 {% endblock %}

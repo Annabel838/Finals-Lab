@@ -1,10 +1,169 @@
 {% extends 'app/base.html' %}
-{% load static %}
+
 {% block content %}
-   <h1>Edit Resident</h1>
-   <form action="{% url 'res_update' resident.pk %}" method="POST">
-       {% csrf_token %}
-       {{ form.as_p }}
-       <input type="submit" value="Update">
-   </form>
-{% endblock content %}
+<div class="update-resident-container">
+    <h1>Update Resident: {{ resident.first_name }} {{ resident.last_name }}</h1>
+
+    <!-- Display Form Errors -->
+    {% if form.errors %}
+        <div class="form-errors">
+            <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <!-- Update Form -->
+    <form method="post" class="update-form">
+        {% csrf_token %}
+        <div class="form-field">
+            <label for="first_name">First Name:</label>
+            {{ form.first_name }}
+        </div>
+        <div class="form-field">
+            <label for="last_name">Last Name:</label>
+            {{ form.last_name }}
+        </div>
+        <div class="form-field">
+            <label for="gender">Gender:</label>
+            {{ form.gender }}
+        </div>
+        <div class="form-field">
+            <label for="birthdate">Birthdate:</label>
+            {{ form.birthdate }}
+        </div>
+        <div class="form-field">
+            <label for="address">Address:</label>
+            {{ form.address }}
+        </div>
+        <div class="form-field">
+            <label for="household">Household:</label>
+            {{ form.household }}
+        </div>
+
+        <div class="button-container">
+            <button type="submit" class="button button-primary">Save</button>
+            <a href="{% url 'res_list' %}" class="button button-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<style>
+/* Page Container */
+.update-resident-container {
+    max-width: 700px;
+    margin: 50px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+}
+
+/* Header */
+.update-resident-container h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1d3557;
+    margin-bottom: 20px;
+}
+
+/* Form Errors */
+.form-errors {
+    background: #ffe5e5;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #e63946;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: #e63946;
+}
+
+.form-errors ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.form-errors li {
+    list-style: none;
+}
+
+/* Form Styling */
+.update-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-field {
+    margin-bottom: 20px;
+}
+
+.form-field label {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 5px;
+    display: block;
+    color: #495057;
+}
+
+.update-form input,
+.update-form select,
+.update-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #a8dadc;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #495057;
+    box-sizing: border-box;
+}
+
+.update-form input:focus,
+.update-form select:focus,
+.update-form textarea:focus {
+    border-color: #457b9d;
+    outline: none;
+}
+
+/* Button Container */
+.button-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
+}
+
+.button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.button-primary {
+    background-color: #1d3557;
+}
+
+.button-primary:hover {
+    background-color: #457b9d;
+}
+
+.button-secondary {
+    background-color: #e63946;
+}
+
+.button-secondary:hover {
+    background-color: #c62828;
+}
+</style>
+{% endblock %}

@@ -6,6 +6,7 @@ class Household(models.Model):
     household_name = models.CharField(max_length=255)
     address = models.CharField(max_length=255, null=True, blank=True)
     head = models.ForeignKey('Resident', on_delete=models.SET_NULL, null=True, blank=True, related_name='head_of_household')
+    members = models.ManyToManyField('Resident' , related_name='household_members', blank=True)
     
     def __str__(self):
         return self.household_name

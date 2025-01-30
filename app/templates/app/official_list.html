@@ -1,12 +1,96 @@
 {% extends 'app/base.html' %}
+
 {% block content %}
-<h1>Officials</h1>
-<a href="{% url 'official_create' %}">+ Add New Official</a>
-<ul>
-    {% for official in officials %}
-        <li>
-            <a href="{% url 'official_detail' official.pk %}">{{ official.position }} - {{ official.first_name }} {{ official.last_name }}</a>
-        </li>
-    {% endfor %}
-</ul>
+<div class="officials-container">
+    <h1>Officials</h1>
+    <a href="{% url 'official_create' %}" class="add-official-btn">+ Add New Official</a>
+    <ul class="official-list">
+        {% for official in officials %}
+            <li class="official-item">
+                <a href="{% url 'official_detail' official.pk %}" class="official-link">
+                    {{ official.position }} - {{ official.first_name }} {{ official.last_name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<style>
+    /* General Body Styling */
+    body {
+        margin: 0;
+        background: linear-gradient(135deg, #f9f9f9, #e0eafc);
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+        height: 100%;
+    }
+
+    /* Officials Container */
+    .officials-container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #1d3557;
+        margin-bottom: 20px;
+    }
+
+    /* Add Official Button */
+    .add-official-btn {
+        display: inline-block;
+        margin-bottom: 20px;
+        padding: 10px 15px;
+        background: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 1em;
+        font-weight: bold;
+    }
+
+    .add-official-btn:hover {
+        background: #0056b3;
+    }
+
+    /* Official List */
+    .official-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .official-item {
+        background: #f9f9f9;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .official-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .official-link {
+        text-decoration: none;
+        font-size: 1.1em;
+        font-weight: 500;
+        color: #007bff;
+    }
+
+    .official-link:hover {
+        text-decoration: underline;
+        color: #0056b3;
+    }
+</style>
 {% endblock content %}

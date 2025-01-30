@@ -1,24 +1,178 @@
 {% extends 'app/base.html' %}
 {% load static %}
-{% block content %}
 
-    <div class="official-entry">
-        <h2><a href="{% url 'official_detail' official.pk %}">{{ official.first_name }}</a></h2>
-        <p>{{ official.last_name }}</p>
-        <p>Position: {{ official.position }}</p>
+{% block content %}
+<div class="official-detail-container">
+    <div class="official-header">
+        <h1>{{ official.first_name }} {{ official.last_name }}</h1>
+        <p class="position">Position: {{ official.position }}</p>
     </div>
 
-    <h2>Events Overseen:</h2>
-    {% if events %}
-        <ul>
-            {% for event in events %}
-                <li>{{ event.event_name }} ({{ event.date|date:"F j, Y" }}) at {{ event.location }}</li>
-            {% endfor %}
-        </ul>
+    <div class="official-details">
+        {% if official.resident %}
+        <p><strong>Name:</strong> {{ official.resident.first_name }} {{ official.resident.last_name }}</p>
     {% else %}
-        <p>No events are currently overseen by this official.</p>
+        <p><strong>Resident:</strong> Not associated with a resident</p>
     {% endif %}
-    
-    <a href="{% url 'official_update' official.pk %}">+ Edit</a>
-    <a href="{% url 'official_delete' official.pk %}">- Delete Content</a>
-{% endblock content %}
+        <p><strong>Contact Number:</strong> {{ official.contact_number }}</p>
+        <p><strong>Term Start:</strong> {{ official.term_start|date:"F j, Y" }}</p>
+        <p><strong>Term End:</strong> {{ official.term_end|date:"F j, Y" }}</p>
+      
+    </div>
+
+    <div class="official-events">
+        <h2>Events Overseen:</h2>
+        {% if events %}
+            <ul class="event-list">
+                {% for event in events %}
+                    <li>
+                        <strong>{{ event.event_name }}</strong>
+                        <span class="event-date">({{ event.date|date:"F j, Y" }})</span>
+                        <span class="event-location">at {{ event.location }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-events">No events are currently overseen by this official.</p>
+        {% endif %}
+    </div>
+
+    <div class="official-actions">
+        <a href="{% url 'official_update' official.pk %}" class="btn btn-primary">Edit</a>
+        <a href="{% url 'official_delete' official.pk %}" class="btn btn-danger">Delete</a>
+        <a href="{% url 'official_list' %}" class="btn btn-secondary">Cancel</a>
+    </div>
+</div>
+
+<style>
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #eef2f3, #8e9eab);
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Official Detail Container */
+.official-detail-container {
+    max-width: 800px;
+    margin: 50px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Center content */
+}
+
+/* Header Section */
+.official-header h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1d3557;
+    margin-bottom: 10px;
+}
+
+.official-header .position {
+    font-size: 1.2rem;
+    color: #457b9d;
+    margin-bottom: 20px;
+}
+
+/* Official Details */
+.official-details {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.official-details p {
+    margin: 5px 0;
+}
+
+/* Events Section */
+.official-events h2 {
+    font-size: 1.5rem;
+    color: #1d3557;
+    margin-bottom: 15px;
+}
+
+.event-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto; /* Center list */
+    display: inline-block; /* Inline for centering */
+}
+
+.event-list li {
+    background: #f1f8ff;
+    margin: 10px 0;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.event-list .event-date {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #6c757d;
+}
+
+.event-list .event-location {
+    font-size: 0.9rem;
+    color: #495057;
+}
+
+.no-events {
+    color: #6c757d;
+    font-style: italic;
+    margin-top: 10px;
+}
+
+/* Actions Section */
+.official-actions {
+    margin-top: 30px;
+    text-align: center; /* Center buttons */
+}
+
+.btn {
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    margin: 5px; /* Add spacing between buttons */
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-danger {
+    background-color: #e63946;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #c62828;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #495057;
+}
+</style>
+{% endblock %}

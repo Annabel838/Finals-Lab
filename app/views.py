@@ -6,13 +6,15 @@ from .forms import IncidentReportForm
 from .forms import OfficialForm
 from .models import Household
 from .forms import HouseholdForm
+from django.contrib.auth.decorators import login_required
 
 
 class HomePageView(TemplateView):
-    template_name = 'app/home.html'
+    template_name = 'home.html'
 
 class AboutPageView(TemplateView):
     template_name = 'app/about.html'
+
 
 class ResListView(ListView):
     model = Resident
@@ -36,20 +38,18 @@ class ResCreateView(CreateView):
     fields = ['first_name', 'last_name', 'gender', 'birthdate', 'address', 'household']
     template_name = 'app/res_create.html'
 
-    def get_initial(self):
-        # Pre-fill the household field if household_id is provided in the URL
-        initial = super().get_initial()
-        household_id = self.request.GET.get('household_id')
-        if household_id:
-            initial['household'] = get_object_or_404(Household, pk=household_id)
-        return initial
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Pass all households to the template for the dropdown
+        context['households'] = Household.objects.all()
+        return context
 
-def get_success_url(self):
-    household = self.object.household
-    if household:
-        return reverse_lazy('household_detail', kwargs={'pk': household.pk})
-    return reverse_lazy('res_list')  # Default to resident list
-
+    def get_success_url(self):
+        # Redirect to the resident list or related household's detail view
+        household = self.object.household
+        if household:
+            return reverse_lazy('household_detail', kwargs={'pk': household.pk})
+        return reverse_lazy('res_list')
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -58,9 +58,11 @@ def get_success_url(self):
 
 class ResUpdateView(UpdateView):
     model = Resident
-    fields = ['first_name', 'last_name']
+    fields = ['first_name', 'last_name', 'gender', 'birthdate', 'address', 'household']
     template_name = 'app/res_update.html'
+    context_object_name = 'resident'  # This ensures you can use 'resident' in the template
     success_url = reverse_lazy('res_list')
+
 
 
 class ResDeleteView(DeleteView):
@@ -94,9 +96,20 @@ class OfficialCreateView(CreateView):
 
 class OfficialUpdateView(UpdateView):
     model = Official
-    fields = ['position', 'first_name', 'last_name', 'contact_number', 'term_start', 'term_end']
+    fields = ['position', 'contact_number', 'term_start', 'term_end']
     template_name = 'app/official_update.html'
     success_url = reverse_lazy('official_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['residents'] = Resident.objects.all()  # Pass residents for dropdown
+        return context
+
+    def form_valid(self, form):
+        resident_id = self.request.POST.get('resident')  # Get resident from dropdown
+        if resident_id:
+            form.instance.resident = get_object_or_404(Resident, pk=resident_id)
+        return super().form_valid(form)
 
 class OfficialDeleteView(DeleteView):
     model = Official

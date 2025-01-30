@@ -1,10 +1,125 @@
 {% extends 'app/base.html' %}
 
 {% block content %}
-  <h2>Create Incident Report</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
-  </form>
+<div class="wide-wrapper">
+    <div class="form-card-wide">
+        <h1 class="form-title-wide">Create Incident Report</h1>
+        <form method="post">
+            {% csrf_token %}
+            
+            {{ form.as_p }}
+
+            <div class="button-group-wide">
+                <button type="submit" class="btn btn-submit-wide">Submit</button>
+                <a href="{% url 'incident_list' %}" class="btn btn-cancel-wide">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    /* Body Styling */
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Roboto', sans-serif;
+        background-color: #f7fafc;
+    }
+
+    /* Wrapper */
+    .wide-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding-top: 40px;
+        min-height: 100vh;
+        background: linear-gradient(145deg, #d9f4fa, #bee6f7);
+    }
+
+    /* Form Card */
+    .form-card-wide {
+        background: #ffffff;
+        padding: 40px;
+        width: 80%;
+        max-width: 1200px;
+        border-radius: 15px;
+        box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Form Title */
+    .form-title-wide {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #34495e;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    /* Form Fields */
+    form label {
+        font-size: 1.1rem;
+        font-weight: 500;
+        margin-bottom: 8px;
+        display: block;
+        color: #4a5568;
+    }
+
+    form input,
+    form textarea,
+    form select {
+        width: 100%;
+        padding: 12px 15px;
+        font-size: 1rem;
+        margin-bottom: 20px;
+        border: 2px solid #dfe6e9;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    form input:focus,
+    form textarea:focus,
+    form select:focus {
+        border-color: #3498db;
+        outline: none;
+    }
+
+    /* Button Group */
+    .button-group-wide {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    /* Buttons */
+    .btn {
+        padding: 12px 25px;
+        font-size: 1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+        color: #fff;
+        text-transform: uppercase;
+    }
+
+    .btn-submit-wide {
+        background-color: #2ecc71;
+    }
+
+    .btn-submit-wide:hover {
+        background-color: #27ae60;
+        box-shadow: 0px 4px 15px rgba(46, 204, 113, 0.5);
+    }
+
+    .btn-cancel-wide {
+        background-color: #e74c3c;
+    }
+
+    .btn-cancel-wide:hover {
+        background-color: #c0392b;
+        box-shadow: 0px 4px 15px rgba(231, 76, 60, 0.5);
+    }
+</style>
 {% endblock %}

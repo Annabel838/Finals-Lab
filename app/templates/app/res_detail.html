@@ -2,34 +2,174 @@
 {% load static %}
 
 {% block content %}
+<div class="resident-detail-container">
+    <div class="resident-header">
+        <h1>{{ resident.first_name }} {{ resident.last_name }}</h1>
+    </div>
+    <div class="resident-info">
+        <p><strong>Birthdate:</strong> {{ resident.birthdate }}</p>
+        <p><strong>Address:</strong> {{ resident.address }}</p>
 
-    <h1>{{ resident.first_name }} {{ resident.last_name }}</h1>
-    <p>Birthdate: {{ resident.birthdate }}</p>
-    <p>Address: {{ resident.address }}</p>
+        {% if resident.household %}
+            <p><strong>Household:</strong> {{ resident.household.household_name }}</p>
+            <p><strong>Head of Household:</strong> {{ resident.household.head.first_name }} {{ resident.household.head.last_name }}</p>
+        {% else %}
+            <p class="no-household">This resident does not belong to any household.</p>
+        {% endif %}
+    </div>
 
-    {% if resident.household %}
-        <p>Household: {{ resident.household.household_name }}</p>
-        <p>Head of Household: {{ resident.household.head.first_name }} {{ resident.household.head.last_name }}</p>
-    {% else %}
-        <p>This resident does not belong to any household.</p>
-    {% endif %}
+    <div class="resident-events">
+        <h2>Events:</h2>
+        {% if resident.events.all %}
+            <ul class="event-list">
+                {% for event in resident.events.all %}
+                    <li>
+                        <strong>{{ event.event_name }}</strong> 
+                        <span class="event-date">on {{ event.date }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-events">This resident is not attending any events.</p>
+        {% endif %}
+    </div>
 
-    <h2>Events:</h2>
-    {% if resident.events.all %}
-        <ul>
-            {% for event in resident.events.all %}
-                <li>{{ event.event_name }} on {{ event.date }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>This resident is not attending any events.</p>
-    {% endif %}
+    <div class="resident-actions">
+        <a href="{% url 'res_update' resident.pk %}" class="btn btn-primary">+ Edit</a>
+        <a href="{% url 'res_delete' resident.pk %}" class="btn btn-danger">- Delete Content</a>
+    </div>
 
-    <a href="{% url 'res_update' resident.pk %}">+ Edit</a>
-    <a href="{% url 'res_delete' resident.pk %}">- Delete Content</a>
+    <div class="back-button">
+        <a href="{% url 'res_list' %}" class="btn btn-secondary">Back to Resident Table</a>
+    </div>
+</div>
 
-    <!-- Back to Resident Table Button -->
-    <br><br>
-    <a href="{% url 'res_list' %}" class="btn btn-secondary">Back to Resident Table</a>
+<style>
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #f0f4f8, #d9e2ec);
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
 
+/* Container Styling */
+.resident-detail-container {
+    max-width: 800px;
+    margin: 50px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Header Styling */
+.resident-header h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1d3557;
+    margin-bottom: 20px;
+}
+
+/* Information Section */
+.resident-info p {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.resident-info .no-household {
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Events Section */
+.resident-events h2 {
+    font-size: 1.5rem;
+    color: #457b9d;
+    margin-bottom: 15px;
+}
+
+.event-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.event-list li {
+    background: #e0f7fa;
+    margin: 10px 0;
+    padding: 10px 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    color: #333;
+}
+
+.event-list .event-date {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #616161;
+}
+
+.no-events {
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Action Buttons */
+.resident-actions {
+    margin: 20px 0;
+}
+
+.btn {
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    margin-right: 10px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-danger {
+    background-color: #e63946;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #c62828;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #495057;
+}
+
+/* Back Button */
+.back-button {
+    margin-top: 20px;
+}
+
+.back-button .btn-secondary {
+    padding: 10px 30px;
+}
+</style>
 {% endblock %}

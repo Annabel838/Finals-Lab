@@ -1,10 +1,163 @@
 {% extends 'app/base.html' %}
-{% load static %}
+
 {% block content %}
-    <a href="{% url 'res_create' %}">+ Create</a>
-    {% for resident in residents %}
-    <div class="resident-entry">
-        <h2><a href="{% url 'res_detail' resident.pk %}">{{ resident.first_name }}</a></h2>
+<div class="container">
+    <h1>Resident Management</h1>
+
+    <div class="flex justify-between items-center mb-6">
+        <a href="{% url 'res_create' %}" class="button button-primary">
+            + Create Resident
+        </a>
+        <input type="text" class="search-bar" placeholder="Search residents...">
     </div>
-    {% endfor %}
-{% endblock content %}
+
+    {% if residents %}
+        <div class="grid">
+            {% for resident in residents %}
+                <div class="card">
+                    <h2>{{ resident.first_name }} {{ resident.last_name }}</h2>
+                    <div class="card-buttons">
+                        <a href="{% url 'res_detail' resident.pk %}" class="button button-primary">View Details</a>
+                        <a href="{% url 'res_update' resident.pk %}" class="button button-primary">Edit</a>
+                        <a href="{% url 'res_delete' resident.pk %}" class="button button-danger">Delete</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="no-content">No residents available.</p>
+    {% endif %}
+</div>
+
+<style>
+/* General Page Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(120deg, #e0f7fa, #e3f2fd);
+    color: #2c3e50;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Container */
+.container {
+    max-width: 100%;
+    margin: 20px 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Page Header */
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a237e;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Search Bar */
+.search-bar {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    border: 2px solid #90caf9;
+    border-radius: 30px;
+    font-size: 1rem;
+    outline: none;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.search-bar:focus {
+    border-color: #1e88e5;
+    box-shadow: 0 4px 15px rgba(30, 136, 229, 0.3);
+}
+
+/* Grid Layout */
+.grid {
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    align-items: start;
+}
+
+/* Card Styling */
+.card {
+    background: linear-gradient(145deg, #ffffff, #e0f7fa);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.card h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1565c0;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #546e7a;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+/* Buttons Inside the Card */
+.card-buttons {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.button-primary {
+    background-color: #42a5f5;
+    color: #ffffff;
+}
+
+.button-primary:hover {
+    background-color: #1e88e5;
+    transform: translateY(-3px);
+}
+
+.button-danger {
+    background-color: #ef5350;
+    color: #ffffff;
+}
+
+.button-danger:hover {
+    background-color: #e53935;
+    transform: translateY(-3px);
+}
+
+/* Empty State */
+.no-content {
+    text-align: left;
+    font-size: 1rem;
+    color: #b0bec5;
+    margin-top: 20px;
+}
+</style>
+{% endblock %}

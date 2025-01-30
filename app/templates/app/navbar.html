@@ -1,19 +1,60 @@
-<header class="header 
-    {% if request.path == '/' %}home-header
-    {% elif request.path == '/about/' %}about-header
-    {% elif request.path == '/res/' %}res-header
-    {% elif request.path == '/officials/' %}official-header
-    {% elif request.path == '/events/' %}event-header
-    {% elif request.path == '/incident/' %}incident-header
-    {% elif request.path == '/household/' %}household-header
-    {% endif %}">
-    <nav>
-        <a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a>
-        <a href="/about/" class="{% if request.path == '/about/' %}active{% endif %}">About</a>
-        <a href="/res/" class="{% if request.path == '/res/' %}active{% endif %}">Resident</a>
-        <a href="/officials/" class="{% if request.path == '/officials/' %}active{% endif %}">Official</a>
-        <a href="/events/" class="{% if request.path == '/events/' %}active{% endif %}">Events</a>
-        <a href="/incident/" class="{% if request.path == '/incident/' %}active{% endif %}">Incident Reports</a>
-        <a href="/households/" class="{% if request.path == '/household/' %}active{% endif %}">Households</a>
-    </nav>
-</header>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sidebar Example</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+
+<!-- Sidebar (hidden by default) -->
+<nav class="w3-sidebar w3-bar-block w3-card w3-animate-left" style="display:none;z-index:2;width:250px;" id="mySidebar">
+    <button onclick="w3_close()" class="w3-bar-item w3-button w3-large">Close</button>
+    <a href="/home/" class="w3-bar-item w3-button">Home</a>
+    <a href="/about/" class="w3-bar-item w3-button">About</a>
+    <a href="/res/" class="w3-bar-item w3-button">Resident</a>
+    <a href="/officials/" class="w3-bar-item w3-button">Officials</a>
+    <a href="/events/" class="w3-bar-item w3-button">Events</a>
+    <a href="/incident/" class="w3-bar-item w3-button">Incident Reports</a>
+    <a href="/households/" class="w3-bar-item w3-button">Households</a>
+</nav>
+
+<!-- Top bar -->
+<div class="w3-top">
+    <div class="w3-bar w3-white w3-large">
+        <button class="w3-bar-item w3-button w3-left" onclick="w3_open()">☰</button>
+        <span class="w3-bar-item w3-center">Pilar Baranggay Website</span>
+
+        {% if user.is_authenticated %}
+            <span class="w3-bar-item w3-right">Hi, {{ user.username }}</span>
+            <form method="post" action="{% url 'logout' %}" class="w3-bar-item w3-right" style="margin: 0;">
+                {% csrf_token %}
+                <button type="submit" class="w3-button">Logout</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}" class="w3-bar-item w3-button w3-right">Login</a> 
+            <a href="{% url 'signup' %}" class="w3-bar-item w3-button w3-right">Sign up</a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Page content -->
+<div class="w3-main" style="margin-top:50px;">
+    {% block content %}
+    <!-- Dynamic content will be injected here -->
+    {% endblock content %}
+</div>
+
+<script>
+// Open and close sidebar
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+}
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+}
+</script>
+
+</body>
+</html>

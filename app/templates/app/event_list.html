@@ -1,13 +1,76 @@
 {% extends 'app/base.html' %}
-{% block content %}
-<h1>Event</h1>
-<a href="{% url 'event_create' %}">+ Add New Event</a>
-<ul class="no-bullets">
-    {% for event in events %}
-        <li>
-            <a href="{% url 'event_detail' event.pk %}">{{ event.event_name }}</a>
-        </li>
-    {% endfor %}
-</ul>
 
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 0;
+    }
+
+    .event-list-container {
+        max-width: 800px;
+        margin: 20px auto;
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    h1 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .add-event-btn {
+        display: inline-block;
+        margin-bottom: 20px;
+        padding: 10px 15px;
+        background: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 1em;
+    }
+
+    .add-event-btn:hover {
+        background: #0056b3;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    ul li {
+        background: #f0f0f0;
+        margin: 5px 0;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    ul li a {
+        text-decoration: none;
+        color: #007bff;
+        font-size: 1.1em;
+    }
+
+    ul li a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="event-list-container">
+    <h1>Events</h1>
+    <a href="{% url 'event_form' %}" class="add-event-btn">+ Add New Event</a>
+    <ul>
+        {% for event in events %}
+            <li>
+                <!-- Ensure the link here matches your 'urls.py' naming -->
+                <a href="{% url 'event_detail' event.pk %}">{{ event.event_name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock content %}

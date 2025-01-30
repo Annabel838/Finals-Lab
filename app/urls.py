@@ -1,5 +1,7 @@
-from django.urls import path  # Ensure this line is at the top of the file
 from . import views  # Import views
+from django.contrib.auth.views import LoginView, LogoutView
+from django.urls import include, path  # Add 'include' here
+from django.contrib import admin
 
 from .views import (
     HomePageView, AboutPageView,
@@ -9,10 +11,13 @@ from .views import (
     HouseholdListView, HouseholdDetailView, HouseholdCreateView, HouseholdUpdateView, HouseholdDeleteView
 )
 
+
+
 urlpatterns = [
-    path('', HomePageView.as_view(), name='home'),
+
+    path('home/', HomePageView.as_view(), name='home'), 
     path('about/', AboutPageView.as_view(), name='about'),
-   
+    
     path('res/', ResListView.as_view(), name='res_list'),
     path('res/<int:pk>/', ResDetailed.as_view(), name='res_detail'),
     path('res/create/', ResCreateView.as_view(), name='res_create'),
@@ -27,13 +32,13 @@ urlpatterns = [
 
     path('events/', EventListView.as_view(), name='event_list'),
     path('events/<int:pk>/', EventDetailView.as_view(), name='event_detail'),
-    path('events/create/', EventCreateView.as_view(), name='event_create'),
-    path('events/<int:pk>/edit/', EventUpdateView.as_view(), name='event_update'),
+    path('events/create/', EventCreateView.as_view(), name='event_form'),
+    path('events/<int:pk>/edit/', EventUpdateView.as_view(), name='event_form'),
     path('events/<int:pk>/delete/', EventDeleteView.as_view(), name='event_delete'),
 
     path('incident/create/', views.incident_create, name='incident_create'),
     path('incident/', views.incident_list, name='incident_list'),
-    path('incidents/<int:pk>/', views.incident_detail, name='incident_detail'),
+    path('incident/<int:pk>/', views.incident_detail, name='incident_detail'),
     
 
     path('households/', HouseholdListView.as_view(), name='household_list'),
